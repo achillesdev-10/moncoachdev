@@ -1,0 +1,41 @@
+{
+  "name": "moncoachdev",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.104.1",
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.4.2",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^0.378.0",
+    "next": "^16.2.4",
+    "next-themes": "^0.4.6",
+    "prismjs": "^1.30.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-simple-code-editor": "^0.14.1",
+    "recharts": "^3.8.1",
+    "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^20",
+    "@types/prismjs": "^1.26.6",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.5.0",
+    "eslint": "^8",
+    "eslint-config-next": "^16.2.4",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
