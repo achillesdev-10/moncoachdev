@@ -7,6 +7,7 @@ import {
   Award, Target, Rocket
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { getCurrentUser } from '@/lib/getUser';
 import { Sidebar } from '@/components/Sidebar';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import Link from 'next/link';
@@ -25,12 +26,12 @@ export default function LeaderboardPage() {
       setLoading(true);
       
       // 1. Récupérer l'utilisateur actuel
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
       setCurrentUser(user);
 
       // 2. Récupérer le Top 10
       const { data: topTen } = await supabase
-        .from('profiles')
+        .from('app_users')
         .select('*')
         .order('xp', { ascending: false })
         .limit(10);
@@ -40,7 +41,7 @@ export default function LeaderboardPage() {
       // 3. Récupérer la position et profil de l'utilisateur actuel s'il n'est pas dans le top 10
       if (user) {
         const { data: allProfiles } = await supabase
-          .from('profiles')
+          .from('app_users')
           .select('id, xp, username, rank')
           .order('xp', { ascending: false });
         
@@ -52,7 +53,7 @@ export default function LeaderboardPage() {
       }
 
       // 4. Statistiques Globales
-      const { data: profilesData } = await supabase.from('profiles').select('xp');
+      const { data: profilesData } = await supabase.from('app_users').select('xp');
       const totalXp = profilesData?.reduce((acc, p) => acc + (p.xp || 0), 0) || 0;
 
       const today = new Date();

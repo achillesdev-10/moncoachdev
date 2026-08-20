@@ -16,6 +16,7 @@ import {
   CheckCircle2, AlertCircle, X, Info, Maximize2
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { getCurrentUser } from '@/lib/getUser';
 
 // Types pour les langages supportés
 type Language = 'html' | 'css' | 'javascript' | 'python';
@@ -98,7 +99,7 @@ export default function PlaygroundPage() {
   };
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
+    getCurrentUser().then(u => setUser(u));
     if (activeTab === 'python') loadPyodide();
   }, [activeTab]);
 

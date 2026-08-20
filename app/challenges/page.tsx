@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search, Target, Zap, Sword, Trophy, ChevronRight, Code, ArrowRight } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { getCurrentUser } from '@/lib/getUser';
 import Link from 'next/link';
 import { Sidebar } from '@/components/Sidebar';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -16,7 +17,7 @@ export default function ChallengesPage() {
   useEffect(() => {
     const fetchChallenges = async () => {
       setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
       setUser(user);
       const { data } = await supabase.from('challenges').select('*');
       setChallenges(data || []);

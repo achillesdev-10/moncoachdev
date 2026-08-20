@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { LayoutDashboard, BookOpen, Trophy, Settings, Sword, LogOut, Terminal, Mail, LogIn, Map, Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
+import { getCurrentUser, logout } from '@/lib/getUser';
 import { usePathname, useRouter } from 'next/navigation';
 
 const SidebarItem = ({ icon: Icon, label, href, onClick }: { icon: any, label: string, href: string, onClick?: () => void }) => {
@@ -32,17 +32,18 @@ export const Sidebar = () => {
   const router = useRouter();
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-    return () => subscription.unsubscribe();
+    getCurrentUser().then(u => setUser(u));
+    // Vérifier l'auth au changement de page
+    const interval = setInterval(() => {
+      getCurrentUser().then(u => setUser(u));
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    await logout();
+    setUser(null);
     router.push('/');
-    router.refresh();
     setMobileOpen(false);
   };
 

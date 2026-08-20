@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useMemo } from 'react';
 import { supabase } from '@/lib/supabase';
+import { getCurrentUser, logout } from '@/lib/getUser';
 import { useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/Sidebar';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -32,26 +33,20 @@ export default function AdminDashboard() {
   useEffect(() => {
     const checkAdminAndFetchData = async () => {
       setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
 
       if (!user) {
         router.push('/login');
         return;
       }
 
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('is_admin')
-        .eq('id', user.id)
-        .single();
-
-      if (!profile?.is_admin) {
+      if (!user.is_admin) {
         router.push('/');
         return;
       }
 
       // Fetch Stats & Data
-      const { data: allProfiles } = await supabase.from('profiles').select('*');
+      const { data: allProfiles } = await supabase.from('app_users').select('*');
       const { data: allChallenges } = await supabase.from('challenges').select('*');
       
       // Calculate basic stats
@@ -456,8 +451,8 @@ export default function AdminDashboard() {
             </button>
             <button 
               onClick={async () => {
-                await supabase.auth.signOut();
-                router.push('/login');
+                await logout();
+                router.push('/');
               }}
               className="flex items-center gap-2 bg-red-500/10 text-red-500 border border-red-500/20 px-4 py-2 rounded-xl text-sm font-bold hover:bg-red-500 hover:text-white transition-all shadow-sm"
             >

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { getCurrentUser } from '@/lib/getUser';
 import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs';
 import 'prismjs/components/prism-markup';
@@ -51,16 +52,11 @@ export default function ChallengePlayground() {
     const getData = async () => {
       try {
         setLoading(true);
-        const { data: { user } } = await supabase.auth.getUser();
+        const user = await getCurrentUser();
         setUser(user);
 
         if (user) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('xp')
-            .eq('id', user.id)
-            .single();
-          setCurrentXp(profile?.xp || 0);
+          setCurrentXp(user.xp || 0);
 
           const { data: completion } = await supabase
             .from('user_completions')
@@ -134,7 +130,7 @@ export default function ChallengePlayground() {
 
           // 2. Ajouter l'XP
           const newXp = currentXp + (challenge?.xp_reward || 0);
-          await supabase.from('profiles').update({ xp: newXp }).eq('id', user.id);
+          await supabase.from('app_users').update({ xp: newXp }).eq('id', user.id);
           setCurrentXp(newXp);
         }
 

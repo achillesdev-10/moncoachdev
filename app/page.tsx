@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search, Target, Zap, User, Bell, Trophy, ChevronRight, Rocket } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { getCurrentUser } from '@/lib/getUser';
 import Link from 'next/link';
 import { Sidebar } from '@/components/Sidebar';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -18,17 +19,13 @@ export default function Home() {
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
       setUser(user);
 
       if (user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-        setProfile(profile);
-        if (profile) setDisplayedXp(profile.xp || 0);
+        // L'utilisateur est déjà le profil (app_users)
+        setProfile(user);
+        setDisplayedXp(user.xp || 0);
 
         const { data: challengesData } = await supabase
           .from('challenges')
@@ -39,12 +36,6 @@ export default function Home() {
       setLoading(false);
     };
     getData();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
   }, []);
 
   // Animation de l'XP

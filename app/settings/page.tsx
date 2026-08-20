@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Settings, User, Mail, Shield, LogOut, Save, CheckCircle2, AlertCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { getCurrentUser, logout } from '@/lib/getUser';
 import { useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/Sidebar';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -19,7 +20,7 @@ export default function SettingsPage() {
   useEffect(() => {
     const getUserData = async () => {
       setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
       
       if (!user) {
         router.push('/login');
@@ -28,15 +29,9 @@ export default function SettingsPage() {
 
       setUser(user);
 
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (profile) {
-        setProfile(profile);
-        setUsername(profile.username || '');
+      if (user) {
+        setProfile(user);
+        setUsername(user.username || '');
       }
       setLoading(false);
     };
@@ -51,7 +46,7 @@ export default function SettingsPage() {
 
     try {
       const { error } = await supabase
-        .from('profiles')
+        .from('app_users')
         .update({ 
           username: username,
           updated_at: new Date().toISOString()
@@ -64,6 +59,7 @@ export default function SettingsPage() {
       
       // Refresh local profile state
       setProfile({ ...profile, username });
+      // Mettre à jour le localStorage si nécessaire
     } catch (error: any) {
       setMessage({ type: 'error', text: error.message || 'Une erreur est survenue lors de la mise à jour.' });
     } finally {
@@ -74,9 +70,8 @@ export default function SettingsPage() {
   };
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/login');
-    router.refresh();
+    await logout();
+    router.push('/');
   };
 
   if (loading) {
