@@ -12,3 +12,7 @@ body {
   color: rgb(var(--foreground-rgb));
   background: white;
 }
+
+.dark body {
+  background: #0f172a;
+}

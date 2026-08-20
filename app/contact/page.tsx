@@ -84,7 +84,7 @@ export default function ContactPage() {
             </div>
 
             {/* Formulaire */}
-            <div className="lg:col-cols-2">
+            <div className="lg:col-span-2">
               <div className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-xl">
                 {submitted ? (
                   <div className="text-center py-12">

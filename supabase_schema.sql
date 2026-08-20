@@ -33,6 +33,7 @@ CREATE TABLE profiles (
   username TEXT UNIQUE,
   xp INTEGER DEFAULT 0,
   rank TEXT DEFAULT 'Apprenti',
+  is_admin BOOLEAN DEFAULT false,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -130,7 +131,8 @@ VALUES
 ('Le Distributeur', 'Utilise un switch pour afficher "Café", "Thé" ou "Eau" selon la valeur de $choix.', 'Apprenti', 90, 'algo', '<?php\n$choix = "Café";\n', ARRAY['switch', 'case', 'break', 'echo'], 'PHP'),
 ('Tableau de Scores', 'Crée un tableau $scores avec 3 nombres et affiche la somme totale.', 'Apprenti', 110, 'algo', '<?php\n', ARRAY['$scores = [', 'array_sum(', 'echo'], 'PHP'),
 ('Filtrage d''Email', 'Vérifie si la variable $email contient un "@" en utilisant str_contains().', 'Pilote', 130, 'algo', '<?php\n$email = "test@dev.com";\n', ARRAY['str_contains(', '$email', '"@"'], 'PHP'),
-('Compteur de Mots', 'Compte le nombre de mots dans la phrase "Le code est une aventure" avec str_word_count().', 'Apprenti', 80, 'algo', '<?php\n$phrase = "Le code est une aventure";\n', ARRAY['str_word_count(', '$phrase', 'echo'], 'PHP'),
+('Compteur de Mots', 'Compte le nombre de mots dans la phrase "Le code est une aventure" avec str_word_count().', 'Apprenti', 80, 'algo', '<?php\n$phrase = "Le code est une aventure";\n', ARRAY['str_word_count(', '$phrase', 'echo'], 'PHP');
+
 -- 4. Défis Prioritaires Python/PHP
 INSERT INTO challenges (titre, description, niveau, xp_reward, type, initial_code, test_keywords, language, categorie)
 VALUES 
