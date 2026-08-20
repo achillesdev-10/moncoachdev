@@ -6,7 +6,10 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node scripts/seed_all.js",
+    "seed:legacy": "node scripts/seed.js",
+    "seed:expansion": "node scripts/seed_expansion.js"
   },
   "dependencies": {
     "@supabase/realtime-js": "^2.112.3",
