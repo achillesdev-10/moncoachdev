@@ -10,6 +10,7 @@ pnpm-lock.yaml
 out/
 build/
 dist/
+tsconfig.tsbuildinfo
 
 # Variables d'environnement
 .env
