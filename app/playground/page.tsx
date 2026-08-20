@@ -197,7 +197,7 @@ export default function PlaygroundPage() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex text-slate-900 dark:text-slate-300 transition-colors duration-300">
       <Sidebar />
 
-      <main className="flex-grow ml-64 flex flex-col h-screen overflow-hidden">
+      <main className="flex-grow lg:ml-64 flex flex-col h-screen overflow-hidden pt-16 lg:pt-0">
         {/* Header Playground */}
         <header className="h-16 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 bg-white dark:bg-slate-900/50 backdrop-blur-xl shrink-0">
           <div className="flex items-center gap-4">

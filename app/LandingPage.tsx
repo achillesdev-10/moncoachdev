@@ -45,7 +45,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-white dark:bg-slate-900 flex text-slate-900 dark:text-slate-300 transition-colors duration-300">
       <Sidebar />
 
-      <main className="flex-grow ml-64 p-8 flex flex-col">
+      <main className="flex-grow lg:ml-64 p-4 sm:p-6 lg:p-8 flex flex-col pt-16 lg:pt-8">
         {/* Header */}
         <header className="flex justify-between items-center mb-12">
           <div>
@@ -71,13 +71,13 @@ export default function LandingPage() {
         <div className="mb-16 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 p-12 rounded-[2.5rem] relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -mr-48 -mt-48" />
           <div className="relative z-10 max-w-3xl">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-14 h-14 bg-primary/20 rounded-2xl flex items-center justify-center">
-                <Zap className="w-8 h-8 text-primary" />
+            <div className="flex items-center gap-3 mb-4 sm:mb-6">
+              <div className="w-10 h-10 sm:w-14 sm:h-14 bg-primary/20 rounded-2xl flex items-center justify-center">
+                <Zap className="w-5 h-5 sm:w-8 sm:h-8 text-primary" />
               </div>
-              <span className="text-xs font-black uppercase tracking-[0.2em] text-primary">Plateforme EdTech</span>
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-primary">Plateforme EdTech</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight mb-4 sm:mb-6">
               Apprends le code en <span className="text-primary">relevant des défis</span>
             </h2>
             <p className="text-lg text-slate-500 dark:text-slate-400 mb-8 max-w-2xl font-medium leading-relaxed">
@@ -103,11 +103,11 @@ export default function LandingPage() {
 
         {/* Features Grid */}
         <div className="mb-16">
-          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-8 flex items-center gap-3">
-            <Sparkles className="w-6 h-6 text-primary" />
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-6 sm:mb-8 flex items-center gap-3">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
             Pourquoi MonCoachDev ?
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {features.map((feat, i) => (
               <div 
                 key={i}
@@ -125,11 +125,11 @@ export default function LandingPage() {
 
         {/* Grille des Rangs */}
         <div className="mb-16">
-          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-8 flex items-center gap-3">
-            <Trophy className="w-6 h-6 text-yellow-500" />
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-6 sm:mb-8 flex items-center gap-3">
+            <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500" />
             Le système de grades
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {ranks.map((rank, i) => (
               <div 
                 key={i}
@@ -157,7 +157,7 @@ export default function LandingPage() {
           </div>
 
           {challenges.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {challenges.map((challenge) => (
                 <Link 
                   key={challenge.id}

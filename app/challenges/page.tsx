@@ -40,11 +40,11 @@ export default function ChallengesPage() {
     <div className="min-h-screen bg-white dark:bg-slate-900 flex text-slate-900 dark:text-slate-300 transition-colors duration-300">
       <Sidebar />
 
-      <main className="flex-grow ml-64 p-8 flex flex-col">
-        <header className="flex justify-between items-center mb-10">
+      <main className="flex-grow lg:ml-64 p-4 sm:p-6 lg:p-8 flex flex-col pt-16 lg:pt-8">
+        <header className="flex justify-between items-center mb-6 sm:mb-10">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Catalogue des Défis</h1>
-            <p className="text-slate-900 dark:text-slate-400 mt-1">Choisis ta mission et gagne de l'expérience.</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Catalogue des Défis</h1>
+            <p className="text-slate-900 dark:text-slate-400 mt-1 text-sm sm:text-base">Choisis ta mission et gagne de l&apos;expérience.</p>
           </div>
           <ThemeToggle />
         </header>
@@ -66,12 +66,12 @@ export default function ChallengesPage() {
           </div>
         )}
 
-        <div className="flex gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit mb-8 border border-slate-200 dark:border-slate-700 overflow-x-auto">
+        <div className="flex gap-1.5 sm:gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit mb-6 sm:mb-8 border border-slate-200 dark:border-slate-700 overflow-x-auto">
           {['HTML', 'CSS', 'JavaScript', 'Python', 'PHP'].map((lang) => (
             <button
               key={lang}
               onClick={() => setSelectedLanguage(lang)}
-              className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 relative whitespace-nowrap ${
+              className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 relative whitespace-nowrap ${
                 selectedLanguage === lang
                   ? 'bg-primary text-slate-900 shadow-lg shadow-primary/20'
                   : 'text-slate-900 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -83,13 +83,13 @@ export default function ChallengesPage() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="bg-slate-50 dark:bg-slate-800 h-64 rounded-3xl animate-pulse border border-slate-200 dark:border-slate-700" />
             ))}
           </div>
         ) : filteredChallenges.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredChallenges.map((challenge) => (
               <Link 
                 key={challenge.id}

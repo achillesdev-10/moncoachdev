@@ -8,7 +8,7 @@ export default function CGUPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex text-slate-900 dark:text-slate-400">
       <Sidebar />
-      <main className="flex-grow ml-64 p-8 lg:p-12 overflow-y-auto">
+      <main className="flex-grow lg:ml-64 p-4 sm:p-6 lg:p-12 pt-16 lg:pt-12 overflow-y-auto">
         <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900/50 backdrop-blur-sm p-10 lg:p-16 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl">
           <div className="flex items-center gap-4 mb-12">
             <div className="p-3 bg-primary/10 rounded-2xl">

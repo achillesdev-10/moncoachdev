@@ -91,7 +91,7 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-white dark:bg-slate-900 flex text-slate-900 dark:text-slate-300 transition-colors duration-300">
       <Sidebar />
 
-      <main className="flex-grow ml-64 p-8 flex flex-col max-w-4xl mx-auto">
+      <main className="flex-grow lg:ml-64 p-4 sm:p-6 lg:p-8 flex flex-col max-w-4xl mx-auto pt-16 lg:pt-8">
         <header className="flex justify-between items-center mb-10">
           <div>
             <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-3">

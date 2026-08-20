@@ -21,7 +21,7 @@ export default function CoursPage() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex text-slate-900 dark:text-slate-300 transition-colors duration-300">
       <Sidebar />
 
-      <main className="flex-grow ml-64 p-8 flex flex-col items-center justify-center">
+      <main className="flex-grow lg:ml-64 p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center pt-16 lg:pt-8">
         <div className="absolute top-8 right-8">
           <ThemeToggle />
         </div>

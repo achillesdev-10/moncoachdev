@@ -7,7 +7,7 @@ export default function PolitiqueConfidentialitePage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex text-slate-900 dark:text-slate-300">
       <Sidebar />
-      <main className="flex-grow ml-64 p-8 lg:p-12">
+      <main className="flex-grow lg:ml-64 p-4 sm:p-6 lg:p-12 pt-16 lg:pt-12">
         <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 p-10 lg:p-16 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm">
           <h1 className="text-3xl font-black mb-8 text-slate-900 dark:text-white uppercase tracking-tight">Politique de Confidentialité</h1>
           
