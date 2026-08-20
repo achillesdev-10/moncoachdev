@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Search, Target, Zap, Sword, Trophy, ChevronRight, Code } from 'lucide-react';
+import { Search, Target, Zap, Sword, Trophy, ChevronRight, Code, ArrowRight } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import { Sidebar } from '@/components/Sidebar';
@@ -11,10 +11,13 @@ export default function ChallengesPage() {
   const [challenges, setChallenges] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState('HTML');
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const fetchChallenges = async () => {
       setLoading(true);
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
       const { data } = await supabase.from('challenges').select('*');
       setChallenges(data || []);
       setLoading(false);
@@ -45,6 +48,23 @@ export default function ChallengesPage() {
           </div>
           <ThemeToggle />
         </header>
+
+        {!user && (
+          <div className="mb-8 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 p-5 rounded-2xl flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                <ArrowRight className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <p className="font-bold text-slate-900 dark:text-white">Inscris-toi pour sauvegarder ta progression et gagner de l&apos;XP</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">Les défis sont libres — mais l&apos;inscription débloque le système de grades.</p>
+              </div>
+            </div>
+            <Link href="/login" className="bg-primary text-slate-900 px-6 py-2 rounded-xl font-bold text-sm hover:scale-105 transition-all shadow-lg shadow-primary/20 whitespace-nowrap">
+              S&apos;inscrire
+            </Link>
+          </div>
+        )}
 
         <div className="flex gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit mb-8 border border-slate-200 dark:border-slate-700 overflow-x-auto">
           {['HTML', 'CSS', 'JavaScript', 'Python', 'PHP'].map((lang) => (

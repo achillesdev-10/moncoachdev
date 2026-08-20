@@ -92,7 +92,8 @@ export default function ChallengePlayground() {
 
   const validateSolution = async () => {
     if (!user) {
-      setValidationError("Connecte-toi pour soumettre ta solution !");
+      // Rediriger vers la page de connexion
+      window.location.href = '/login';
       return;
     }
 
@@ -258,6 +259,11 @@ export default function ChallengePlayground() {
               {validationError && (
                 <div className="flex items-center gap-2 text-red-400 text-sm font-bold bg-red-400/10 px-4 py-2 rounded-xl border border-red-400/20 animate-shake">
                   <AlertCircle className="w-4 h-4" /> {validationError}
+                </div>
+              )}
+              {!user && (
+                <div className="flex items-center gap-2 text-blue-400 text-sm font-bold bg-blue-400/10 px-4 py-2 rounded-xl border border-blue-400/20">
+                  <Info className="w-4 h-4" /> Connecte-toi pour soumettre et gagner de l&apos;XP
                 </div>
               )}
             </div>

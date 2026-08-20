@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
-import { LayoutDashboard, BookOpen, Trophy, Settings, Sword, LogOut, Terminal, Mail } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { LayoutDashboard, BookOpen, Trophy, Settings, Sword, LogOut, Terminal, Mail, LogIn, Map } from 'lucide-react';
 import Link from 'next/link';
-
-import { usePathname } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
+import { usePathname, useRouter } from 'next/navigation';
 
 const SidebarItem = ({ icon: Icon, label, href }: { icon: any, label: string, href: string }) => {
   const pathname = usePathname();
@@ -26,6 +26,23 @@ const SidebarItem = ({ icon: Icon, label, href }: { icon: any, label: string, hr
 };
 
 export const Sidebar = () => {
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push('/');
+    router.refresh();
+  };
+
   return (
     <aside className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-slate-900 text-slate-900 dark:text-white flex flex-col z-50 border-r border-slate-200 dark:border-slate-800 transition-colors duration-300">
       {/* Logo */}
@@ -43,10 +60,11 @@ export const Sidebar = () => {
         <SidebarItem icon={LayoutDashboard} label="Tableau de bord" href="/" />
         <SidebarItem icon={Sword} label="Catalogue Défis" href="/challenges" />
         <SidebarItem icon={Terminal} label="Playground" href="/playground" />
-        <SidebarItem icon={BookOpen} label="Mes Cours" href="/cours" />
+        <SidebarItem icon={BookOpen} label="Cours" href="/cours" />
         <SidebarItem icon={Trophy} label="Leaderboard" href="/leaderboard" />
+        <SidebarItem icon={Map} label="Roadmaps" href="/roadmap" />
         <SidebarItem icon={Mail} label="Contact" href="/contact" />
-        <SidebarItem icon={Settings} label="Paramètres" href="/settings" />
+        {user && <SidebarItem icon={Settings} label="Paramètres" href="/settings" />}
       </nav>
 
       {/* Legal Links & Footer */}
@@ -75,10 +93,23 @@ export const Sidebar = () => {
 
       {/* User / Bottom info */}
       <div className="p-4 mt-auto border-t border-slate-200 dark:border-white/10">
-        <button className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-slate-900 dark:text-blue-200 hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200">
-          <LogOut className="w-5 h-5" />
-          <span>Déconnexion</span>
-        </button>
+        {user ? (
+          <button 
+            onClick={handleSignOut}
+            className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-slate-900 dark:text-blue-200 hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200"
+          >
+            <LogOut className="w-5 h-5" />
+            <span>Déconnexion</span>
+          </button>
+        ) : (
+          <Link 
+            href="/login"
+            className="flex items-center gap-3 px-4 py-3 w-full rounded-xl bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-all duration-200"
+          >
+            <LogIn className="w-5 h-5" />
+            <span>Se connecter</span>
+          </Link>
+        )}
       </div>
     </aside>
   );

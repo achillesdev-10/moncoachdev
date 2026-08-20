@@ -56,13 +56,27 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Redirection si l'utilisateur n'est pas connecté et essaie d'accéder à une page protégée
-  // On protège tout sauf /, /login et /auth/callback
-  const isAuthPage = request.nextUrl.pathname.startsWith('/login') || 
-                    request.nextUrl.pathname.startsWith('/auth/callback') ||
-                    request.nextUrl.pathname === '/'
+  // Pages publiques accessibles sans inscription
+  const publicPaths = [
+    '/login',
+    '/auth/callback',
+    '/',
+    '/challenges',
+    '/leaderboard',
+    '/playground',
+    '/cours',
+    '/roadmap',
+    '/mentions-legales',
+    '/conditions-generales',
+    '/disclaimer',
+    '/politique-de-confidentialite',
+  ]
 
-  if (!user && !isAuthPage) {
+  const pathname = request.nextUrl.pathname
+  const isPublic = publicPaths.some(p => pathname === p || pathname.startsWith(p + '/'))
+
+  // Pages protégées : settings, contact (nécessitent une inscription)
+  if (!user && !isPublic) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
