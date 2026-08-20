@@ -26,14 +26,22 @@ export default function ChallengesPage() {
   }, []);
 
   const filteredChallenges = challenges.filter(c => {
-    const lang = (c.language || 'HTML').trim().toLowerCase();
+    const lang = (c.language || '').trim().toLowerCase();
     const selected = selectedLanguage.trim().toLowerCase();
-    
-    // Normalisation pour JS/JavaScript
+
+    // Normalisation : JS/JavaScript
     const isJS = (l: string) => l === 'js' || l === 'javascript';
-    
+    // Normalisation : HTML
+    const isHTML = (l: string) => l === 'html' || l === '' || l === 'htm';
+    // Normalisation : CSS
+    const isCSS = (l: string) => l === 'css';
+
+    if (selected === 'html' && isHTML(lang)) return true;
+    if (selected === 'css' && isCSS(lang)) return true;
     if (isJS(selected) && isJS(lang)) return true;
-    return lang === selected;
+    if (selected === 'python' && lang === 'python') return true;
+    if (selected === 'php' && lang === 'php') return true;
+    return false;
   });
 
   return (
