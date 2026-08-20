@@ -1,6 +1,28 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+// Vérifie si l'utilisateur est admin via la table login_sessions + app_users
+async function isAdmin(sessionToken: string): Promise<boolean> {
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+    );
+
+    const { data: session } = await supabase
+      .from('login_sessions')
+      .select('app_user:app_users(is_admin)')
+      .eq('token', sessionToken)
+      .gt('expires_at', new Date().toISOString())
+      .single();
+
+    return (session?.app_user as any)?.is_admin === true;
+  } catch {
+    return false;
+  }
+}
+
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
     request: {
@@ -54,29 +76,30 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // Pages publiques accessibles sans inscription
-  const publicPaths = [
-    '/login',
-    '/auth/callback',
-    '/',
-    '/challenges',
-    '/leaderboard',
-    '/playground',
-    '/cours',
-    '/roadmap',
-    '/mentions-legales',
-    '/conditions-generales',
-    '/disclaimer',
-    '/politique-de-confidentialite',
-  ]
-
   const pathname = request.nextUrl.pathname
-  const isPublic = publicPaths.some(p => pathname === p || pathname.startsWith(p + '/'))
 
-  // L'auth custom utilise le cookie 'session_token' côté client
-  // Le middleware ne peut pas lire localStorage, donc on laisse
-  // les pages non-publiques gérer la redirection côté client
-  // (settings et contact utilisent leur propre vérification)
+  // ============================================================
+  // Protection des routes admin
+  // ============================================================
+  if (pathname.startsWith('/admin')) {
+    const sessionToken = request.cookies.get('session_token')?.value;
+
+    if (!sessionToken) {
+      // Pas de session → rediriger vers login
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = '/login';
+      return NextResponse.redirect(loginUrl);
+    }
+
+    const userIsAdmin = await isAdmin(sessionToken);
+
+    if (!userIsAdmin) {
+      // Utilisateur connecté mais pas admin → rediriger vers l'accueil
+      const homeUrl = request.nextUrl.clone();
+      homeUrl.pathname = '/';
+      return NextResponse.redirect(homeUrl);
+    }
+  }
 
   return response
 }

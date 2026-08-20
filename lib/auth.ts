@@ -40,9 +40,11 @@ export async function createSession(userId: string): Promise<string> {
     expires_at: expiresAt.toISOString(),
   });
 
-  // Stocker dans localStorage
+  // Stocker dans localStorage + cookie (pour le middleware)
   if (typeof window !== 'undefined') {
     localStorage.setItem('session_token', token);
+    // Cookie httpOnly-like via document.cookie (accessible côté serveur par le middleware)
+    document.cookie = `session_token=${token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
   }
 
   return token;
@@ -76,6 +78,8 @@ export async function logout() {
   if (token) {
     await supabase.from('login_sessions').delete().eq('token', token);
     localStorage.removeItem('session_token');
+    // Supprimer le cookie
+    document.cookie = 'session_token=; path=/; max-age=0';
   }
 }
 
