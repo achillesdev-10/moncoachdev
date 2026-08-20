@@ -9,7 +9,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { 
   Users, Trophy, Target, ShieldCheck, Search, Mail, 
   ArrowUpRight, Loader2, Download, TrendingUp, 
-  Activity, BarChart3, Clock, UserCheck, Zap
+  Activity, BarChart3, Clock, UserCheck, Zap, Sword
 } from 'lucide-react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, 
@@ -558,8 +558,11 @@ export default function AdminDashboard() {
                 </div>
               ))}
             </div>
-            <button className="mt-auto w-full py-3 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-400 hover:border-primary hover:text-primary transition-all">
-              Gérer le catalogue
+            <button 
+              onClick={() => router.push('/admin/challenges')}
+              className="mt-auto w-full py-3 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-400 hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2"
+            >
+              <Sword className="w-4 h-4" /> Gérer le catalogue
             </button>
           </div>
         </div>
