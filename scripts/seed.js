@@ -22,6 +22,7 @@ const challenges = [
     type: "bug_hunter",
     niveau: "Apprenti",
     xp_reward: 100,
+    language: 'CSS',
     initial_code: `<div style="position:relative;"><footer style="position:fixed; bottom:0; width:100%; height:60px; background:black; z-index:10;"></footer><button style="position:fixed; bottom:10px; background:orange; z-index:1;">VALIDER LA COMMANDE</button></div>`,
     test_keywords: ["z-index: 11", "z-index: 20", "z-index: 100", "z-index:11", "z-index:20", "z-index:100"]
   },
@@ -31,6 +32,7 @@ const challenges = [
     type: "pixel_perfect",
     niveau: "Pilote",
     xp_reward: 250,
+    language: 'CSS',
     initial_code: `<div style="width:300px; height:180px; background:blue;">CARTE VIP</div>`,
     test_keywords: ["border-radius: 24px", "linear-gradient", "border-radius:24px"]
   },
@@ -40,6 +42,7 @@ const challenges = [
     type: "algo",
     niveau: "Débutant",
     xp_reward: 150,
+    language: 'JavaScript',
     initial_code: `<span>2500.899999</span>`,
     test_keywords: ["2 501 FCFA", "Math.round", "fixed"]
   }

@@ -22,6 +22,7 @@ const expansionChallenges = [
     type: "bug_hunter",
     niveau: "Apprenti",
     xp_reward: 120,
+    language: 'CSS',
     initial_code: `<div style="background:#eee; padding:20px;"><span style="background:red; color:white; padding:5px; position:absolute;">PROMO</span><h2 style="margin-top:0;">50.000 FCFA</h2></div>`,
     test_keywords: ["margin-bottom: 20px", "top: -20px", "position: relative", "margin-top: -20px"]
   },
@@ -31,6 +32,7 @@ const expansionChallenges = [
     type: "pixel_perfect",
     niveau: "Pilote",
     xp_reward: 200,
+    language: 'CSS',
     initial_code: `<nav style="height:60px; background: rgba(255,255,255,0.5);">Menu</nav>`,
     test_keywords: ["backdrop-filter: blur", "border-bottom", "backdrop-filter:blur"]
   },
@@ -40,6 +42,7 @@ const expansionChallenges = [
     type: "algo",
     niveau: "Apprenti",
     xp_reward: 150,
+    language: 'JavaScript',
     initial_code: `<div>15500</div>`,
     test_keywords: ["1.55 ha", "Math.round", "toFixed"]
   },
@@ -49,6 +52,7 @@ const expansionChallenges = [
     type: "pixel_perfect",
     niveau: "Expert",
     xp_reward: 300,
+    language: 'CSS',
     initial_code: `<div style="width:200px; border:1px solid #ccc;">Gnonmi Deluxe</div>`,
     test_keywords: ["box-shadow", "transition", "transform: scale", "transform:scale"]
   }

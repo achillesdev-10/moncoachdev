@@ -28,7 +28,7 @@ export default function ChallengesPage() {
 
   const filteredChallenges = challenges.filter(c => {
     const lang = (c.language || '').trim().toLowerCase();
-    const selected = selectedLanguage.trim().toLowerCase();
+    const sel = selectedLanguage.trim().toLowerCase();
 
     // Normalisation : JS/JavaScript
     const isJS = (l: string) => l === 'js' || l === 'javascript';
@@ -37,11 +37,11 @@ export default function ChallengesPage() {
     // Normalisation : CSS
     const isCSS = (l: string) => l === 'css';
 
-    if (selected === 'html' && isHTML(lang)) return true;
-    if (selected === 'css' && isCSS(lang)) return true;
-    if (isJS(selected) && isJS(lang)) return true;
-    if (selected === 'python' && lang === 'python') return true;
-    if (selected === 'php' && lang === 'php') return true;
+    if (sel === 'html' && isHTML(lang)) return true;
+    if (sel === 'css' && isCSS(lang)) return true;
+    if (isJS(sel) && isJS(lang)) return true;
+    if (sel === 'python' && lang === 'python') return true;
+    if (sel === 'php' && lang === 'php') return true;
     return false;
   });
 
